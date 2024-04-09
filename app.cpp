@@ -21,13 +21,25 @@ bool redundantCheck2(BTNode*, type*);
 void skipword(ifstream&, int);
 
 int main() {
+	int order = 0, source = 0;
 	BST* t1 = new BST();
+	//a
 	readFile("student.txt", t1);		//Error Message not added
+	//b
+	//c
+	cout << "Print in 1.asc or 2.desc         : ";
+	cin >> order;
+	cout << "Enter a cout option 1.Cout 2.txt : ";
+	cin >> source;
+	t1->display(order, source);
 
+	////
+	cout << endl;
 	system("pause");
 	return 0;
 }
 
+//a
 bool readFile(const char* filename, BST* t1) {
 	type* temp = new type;
 
@@ -61,6 +73,7 @@ bool readFile(const char* filename, BST* t1) {
 	return 1;
 }
 
+//Redundancy Check //USED in a
 bool redundantCheck(BST* tree, type* temp) {
 	if (tree->empty()) return 0;
 
@@ -68,6 +81,7 @@ bool redundantCheck(BST* tree, type* temp) {
 	return redundantCheck2(cur, temp);
 }
 
+//Redundancy Check - Recursive
 bool redundantCheck2(BTNode* cur, type* temp) {
 	//Base
 	if (cur == NULL) return 0;					//No Redundant ID
@@ -81,6 +95,8 @@ bool redundantCheck2(BTNode* cur, type* temp) {
 
 }
 
+
+//OWN FUNCTION
 void skipword(ifstream& in, int skip) {
 	for (int i = 0; i < skip; i++)
 		in >> g_dump;
