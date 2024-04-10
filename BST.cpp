@@ -266,18 +266,20 @@ void BST::case3(BTNode* cur) {
 // Question B
 bool BST::deepestNodes() {
 	if (empty()) return 0;
-	deepestNodes2(root);
+	int counter{ 0 };
+	int h{ height(root) };
+	deepestNodes2(root, counter, h);
 	return 1;
 }
 
-void BST::deepestNodes2(BTNode* root) {
+void BST::deepestNodes2(BTNode* root, int& counter, int h) {
 	if (!root) return;
 
-	if (!root->left && !root->right)
-		std::cout << root->item.id << '\n';
+	if (h == 1)
+		std::cout << "Deepest Node " << ++counter << " : " << root->item.id << '\n';
 	else {
-		deepestNodes2(root->left);
-		deepestNodes2(root->right);
+		deepestNodes2(root->left, counter, h - 1);
+		deepestNodes2(root->right, counter, h - 1);
 	}
 }
 
@@ -286,6 +288,7 @@ bool BST::display(int order, int source) {
 	system("cls");
 
 	if (root == NULL) return 0;					// handle special case
+
 	BTNode* cur = root;
 	if ((order == 1 || order == 2) && (source == 1 || source == 2)) {	//Can remove if not needed 
 		if (order == 1) {
@@ -317,11 +320,9 @@ bool BST::display(int order, int source) {
 			}
 		}
 		cout << "\nOutput Successful. ";
-		system("PAUSE");
 		return 1;
 	}
 	cout << "Invalid order/source selection\n\n";
-	system("PAUSE");
 	return 0;
 }
 
@@ -367,6 +368,32 @@ BTNode* BST::CloneSubtree2(BTNode* root) {
 	copy->right = CloneSubtree2(root->right);
 	count++;
 	return copy;
+}
+
+//QUESTION e
+
+bool BST::printLevelNodes() {
+	if (empty()) return 0;
+	BTNode* cur = root;
+	int TH = height(root);
+	for (int i = 1; i <= TH; i++) {	//Loop for all level (1 -> Last)
+		cout << "\nLevel " << i << " nodes: ";
+		printLevelNodes2(cur, i);
+	}
+	cout << endl;
+	return 1;
+}
+
+void BST::printLevelNodes2(BTNode* cur, int lv) {
+	//Base
+	if (cur == NULL) return;
+	if (lv == 1) {
+		cout << cur->item.id << " ";
+		return;
+	}
+	//Recur
+	printLevelNodes2(cur->left, lv - 1);
+	printLevelNodes2(cur->right, lv - 1);
 }
 
 // Question F
@@ -429,5 +456,17 @@ bool BST::checkExist(BTNode* root, BTNode*& node, type& item) {
 		return checkExist(root->right, node, item);
 }
 
+int BST::height(BTNode* cur) {
+	if (cur == NULL) return 0;	//Special case
+
+	//Recursive Case
+	int hleft = height(cur->left);
+	int hright = height(cur->right);
+
+	//Base case
+	if (hleft > hright)
+		return (hleft + 1);
+	return (hright + 1);
+}
 
 

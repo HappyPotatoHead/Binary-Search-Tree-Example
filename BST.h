@@ -47,27 +47,31 @@ struct BST {
 
 	// Tasks
 
-	// Question B
-	void deepestNodes2(BTNode* root);
+	// Question b
+	void deepestNodes2(BTNode* root, int& counter, int h);
 	bool deepestNodes();
 
 	//Question c
 	bool display(int, int);
 	void display2asc(BTNode* cur, ostream&);
 	void display2desc(BTNode* cur, ostream&);
-	bool printItem(BTNode* cur, ostream& out);
 
-	// Question D
+	// Question d
 	BTNode* CloneSubtree2(BTNode* root);
 	bool CloneSubtree(BST t1, type item);
 
-	// Question F
+	//Question e
+	bool printLevelNodes();
+	void printLevelNodes2(BTNode* cur, int lv);
+
+	// Question f
 	void printPath2(BTNode* root, type path[], int pathLength);
 	bool printPath();
 
 
 	// Custom functions
 	bool checkExist(BTNode* root, BTNode*& node, type& item);
+	int height(BTNode* level);
 };
 
 
