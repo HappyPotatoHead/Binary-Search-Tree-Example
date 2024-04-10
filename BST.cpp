@@ -264,23 +264,28 @@ void BST::case3(BTNode* cur) {
 }
 
 // Question B
+// Question B
 bool BST::deepestNodes() {
 	if (empty()) return 0;
 	int counter{ 0 };
-	deepestNodes2(root, counter);
+	int h{ height(root) };
+	cout << "List of deepest nodes,";
+	deepestNodes2(root, counter, h);
+	cout << "\n\n";
 	return 1;
 }
 
-void BST::deepestNodes2(BTNode* root, int& counter) {
+void BST::deepestNodes2(BTNode* root, int& counter, int h) {
 	if (!root) return;
 
-	if (!root->left && !root->right)
-		std::cout << "Deepest Node "<< ++counter << " : " << root->item.id << '\n';
+	if (h == 1)
+		std::cout << "\nNode " << ++counter << " : " << root->item.id;
 	else {
-		deepestNodes2(root->left, counter);
-		deepestNodes2(root->right, counter);
+		deepestNodes2(root->left, counter, h - 1);
+		deepestNodes2(root->right, counter, h - 1);
 	}
 }
+
 
 // Question C
 bool BST::display(int order, int source) {
@@ -347,17 +352,22 @@ void BST::display2desc(BTNode* cur, ostream& out) {
 
 // Question D
 bool BST::CloneSubtree(BST t1, type item) {
+
 	// t2 must be empty before cloning
-	if (t1.empty()) return 0;
+	if (t1.empty()) { 
+		cout << "Tree is empty! ";
+		return 0; 
+	}
 
 	BTNode* temp{ nullptr };
 
 	// item pased in will be the root
 	if (checkExist(t1.root, temp, item)) {
 		root = CloneSubtree2(temp);
+		return 1;
 	}
-	//preOrderPrint();
-	return 1;
+	cout << "ID " << item.id << " does not exist! ";
+	return 0;
 }
 
 BTNode* BST::CloneSubtree2(BTNode* root) {
@@ -387,11 +397,11 @@ bool BST::printLevelNodes() {
 	if (empty()) return 0;
 	BTNode* cur = root;
 	int TH = height(root);
+	cout << "Level Nodes,";
 	for (int i = 1; i <= TH; i++) {	//Loop for all level (1 -> Last)
 		cout << "\nLevel " << i << " nodes: ";
 		printLevelNodes2(cur, i);
 	}
-	cout << endl;
 	return 1;
 }
 
@@ -429,6 +439,7 @@ bool BST::printPath() {
 	if (empty()) return 0;
 	type path[250];
 	int pathLength{};
+	cout << "External paths,\n";
 	printPath2(root, path, pathLength);
 	return 1;
 }

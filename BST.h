@@ -48,7 +48,7 @@ struct BST {
 	// Tasks
 
 	// Question b
-	void deepestNodes2(BTNode* root, int& counter);
+	void deepestNodes2(BTNode* root, int& counter, int h);
 	bool deepestNodes();
 
 	//Question c
