@@ -65,11 +65,6 @@ struct BST {
 	void printPath2(BTNode* root, type path[], int pathLength);
 	bool printPath();
 
-	//Question c
-	bool display(int, int);
-	void display2asc(BTNode* cur, ostream&);
-	void display2desc(BTNode* cur, ostream&);
-	bool printItem(BTNode* cur, ostream& out);
 
 	// Custom functions
 	bool checkExist(BTNode* root, BTNode*& node, type& item);
