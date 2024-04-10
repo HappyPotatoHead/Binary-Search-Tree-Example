@@ -49,7 +49,6 @@ struct BST {
 		bool display(int, int);
 		void display2asc(BTNode* cur, ostream&);
 		void display2desc(BTNode* cur, ostream&);
-		bool printItem(BTNode* cur, ostream& out);
 
 		//Question e
 		bool printLevelNodes();

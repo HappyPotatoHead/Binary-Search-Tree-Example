@@ -323,25 +323,6 @@ void BST::display2desc(BTNode* cur, ostream& out) {
 }
 
 //QUESTION e
-//bool BST::printLevelNodes() {
-//	BTNode* cur;
-//	Queue q;
-//
-//
-//	if (empty()) return 0; 	// special case
-//	q.enqueue(root);	// Step 1: enqueue the first node
-//	for (int i = 0; i < count; i++) {
-//		cout << "\nLevel " << i +1 << " nodes: ";
-//		q.dequeue(cur);
-//		cout << cur->item.id << " ";
-//		if (cur->left != NULL)
-//			q.enqueue(cur->left);
-//
-//		if (cur->right != NULL)
-//			q.enqueue(cur->right);
-//	}
-//}
-
 int BST::height(BTNode* cur) {
 	if (cur == NULL) return 0;	//Special case
 
