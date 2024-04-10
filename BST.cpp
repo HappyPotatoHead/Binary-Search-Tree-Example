@@ -258,7 +258,7 @@ void BST::case3(BTNode *cur) {
 	free(is);
 }
 
-
+//QUESTION c
 bool BST::display(int order, int source) {
 	system("cls");
 
@@ -320,4 +320,60 @@ void BST::display2desc(BTNode* cur, ostream& out) {
 	display2desc(cur->right, out);
 	cur->item.print(out);
 	display2desc(cur->left, out);
+}
+
+//QUESTION e
+//bool BST::printLevelNodes() {
+//	BTNode* cur;
+//	Queue q;
+//
+//
+//	if (empty()) return 0; 	// special case
+//	q.enqueue(root);	// Step 1: enqueue the first node
+//	for (int i = 0; i < count; i++) {
+//		cout << "\nLevel " << i +1 << " nodes: ";
+//		q.dequeue(cur);
+//		cout << cur->item.id << " ";
+//		if (cur->left != NULL)
+//			q.enqueue(cur->left);
+//
+//		if (cur->right != NULL)
+//			q.enqueue(cur->right);
+//	}
+//}
+
+int BST::height(BTNode* cur) {
+	if (cur == NULL) return 0;	//Special case
+
+	//Recursive Case
+	int hleft = height(cur->left);
+	int hright = height(cur->right);
+
+	//Base case
+	if (hleft > hright)
+		return (hleft + 1);
+	return (hright + 1);
+}
+
+bool BST::printLevelNodes() {
+	if (empty()) return 0;
+	BTNode* cur = root;
+	int TH = height(root);
+	for (int i = 1; i <= TH; i++) {	//Loop for all level (1 -> Last)
+		cout << "\nLevel " << i << " nodes: ";
+		printLevelNodes2(cur, i);
+	}
+	return 1;
+}
+
+void BST::printLevelNodes2(BTNode* cur, int lv) {
+	//Base
+	if (cur == NULL) return;
+	if (lv == 1) {
+		cout << cur->item.id << " ";
+		return;
+	}
+	//Recur
+	printLevelNodes2(cur->left, lv - 1);
+	printLevelNodes2(cur->right, lv - 1);
 }

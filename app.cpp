@@ -32,7 +32,12 @@ int main() {
 	cout << "Enter a cout option 1.Cout 2.txt : ";
 	cin >> source;
 	t1->display(order, source);
-
+	//d
+	//e
+	if(t1->printLevelNodes());
+	//f
+	//g
+	//h
 	////
 	cout << endl;
 	system("pause");
