@@ -3,6 +3,11 @@
 #include <algorithm>
 #include "BST.h"
 
+#include <string>
+
+// more memory efficient 
+// #include <vector>
+
 
 using namespace std;
 
@@ -31,7 +36,7 @@ void BST::preOrderPrint() {
 }
 
 
-void BST::preOrderPrint2(BTNode *cur) {
+void BST::preOrderPrint2(BTNode* cur) {
 
 	if (cur == NULL) return;
 	cur->item.print(cout);
@@ -47,7 +52,7 @@ void BST::inOrderPrint() {
 }
 
 
-void BST::inOrderPrint2(BTNode *cur) {
+void BST::inOrderPrint2(BTNode* cur) {
 
 	if (cur == NULL) return;
 
@@ -64,7 +69,7 @@ void BST::postOrderPrint() {
 }
 
 
-void BST::postOrderPrint2(BTNode *cur) {
+void BST::postOrderPrint2(BTNode* cur) {
 	if (cur == NULL) return;
 	postOrderPrint2(cur->left);
 	postOrderPrint2(cur->right);
@@ -81,7 +86,7 @@ int BST::countNode() {
 }
 
 
-void BST::countNode2(BTNode *cur, int &count) {
+void BST::countNode2(BTNode* cur, int& count) {
 	if (cur == NULL) return;
 	countNode2(cur->left, count);
 	countNode2(cur->right, count);
@@ -95,10 +100,10 @@ bool BST::findGrandsons(type grandFather) {
 }
 
 
-bool BST::fGS2(type grandFather, BTNode *cur) {
+bool BST::fGS2(type grandFather, BTNode* cur) {
 	if (cur == NULL) return false;
 	//if (cur->item == grandFather) {
-	if (cur->item.compare2(grandFather)){
+	if (cur->item.compare2(grandFather)) {
 
 		fGS3(cur, 0);// do another TT to find grandsons
 		return true;
@@ -108,7 +113,7 @@ bool BST::fGS2(type grandFather, BTNode *cur) {
 }
 
 
-void BST::fGS3(BTNode *cur, int level) {
+void BST::fGS3(BTNode* cur, int level) {
 	if (cur == NULL) return;
 	if (level == 2) {
 		cur->item.print(cout);
@@ -121,7 +126,7 @@ void BST::fGS3(BTNode *cur, int level) {
 
 
 void BST::topDownLevelTraversal() {
-	BTNode			*cur;
+	BTNode* cur;
 	Queue		    q;
 
 
@@ -143,7 +148,7 @@ void BST::topDownLevelTraversal() {
 
 //insert for BST
 bool BST::insert(type newItem) {
-	BTNode	*cur = new BTNode(newItem);
+	BTNode* cur = new BTNode(newItem);
 	if (!cur) return false;		// special case 1
 	if (root == NULL) {
 		root = cur;
@@ -156,9 +161,9 @@ bool BST::insert(type newItem) {
 }
 
 
-void BST::insert2(BTNode *cur, BTNode *newNode) {
+void BST::insert2(BTNode* cur, BTNode* newNode) {
 	//if (cur->item > newNode->item) {
-	if (cur->item.compare1(newNode->item)){
+	if (cur->item.compare1(newNode->item)) {
 		if (cur->left == NULL)
 			cur->left = newNode;
 		else
@@ -179,14 +184,14 @@ bool BST::remove(type item) {
 	return remove2(root, root, item); 		// normal case
 }
 
-bool BST::remove2(BTNode *pre, BTNode *cur, type item) {
+bool BST::remove2(BTNode* pre, BTNode* cur, type item) {
 
 	// Turn back when the search reaches the end of an external path
 	if (cur == NULL) return false;
 
 	// normal case: manage to find the item to be removed
 	//if (cur->item == item) {
-	if (cur->item.compare2(item)){
+	if (cur->item.compare2(item)) {
 		if (cur->left == NULL || cur->right == NULL)
 			case2(pre, cur);	// case 2 and case 1: cur has less than 2 sons
 		else
@@ -205,7 +210,7 @@ bool BST::remove2(BTNode *pre, BTNode *cur, type item) {
 }
 
 
-void BST::case2(BTNode *pre, BTNode *cur) {
+void BST::case2(BTNode* pre, BTNode* cur) {
 
 	// special case: delete root node
 	if (pre == cur) {
@@ -235,8 +240,8 @@ void BST::case2(BTNode *pre, BTNode *cur) {
 }
 
 
-void BST::case3(BTNode *cur) {
-	BTNode		*is, *isFather;
+void BST::case3(BTNode* cur) {
+	BTNode* is, * isFather;
 
 	// get the IS and IS_parent of current node
 	is = isFather = cur->right;
@@ -258,11 +263,31 @@ void BST::case3(BTNode *cur) {
 	free(is);
 }
 
-//QUESTION c
+// Question B
+bool BST::deepestNodes() {
+	if (empty()) return 0;
+	int counter{ 0 };
+	deepestNodes2(root, counter);
+	return 1;
+}
+
+void BST::deepestNodes2(BTNode* root, int& counter) {
+	if (!root) return;
+
+	if (!root->left && !root->right)
+		std::cout << "Deepest Node "<< ++counter << " : " << root->item.id << '\n';
+	else {
+		deepestNodes2(root->left, counter);
+		deepestNodes2(root->right, counter);
+	}
+}
+
+// Question C
 bool BST::display(int order, int source) {
 	system("cls");
 
 	if (root == NULL) return 0;					// handle special case
+
 	BTNode* cur = root;
 	if ((order == 1 || order == 2) && (source == 1 || source == 2)) {	//Can remove if not needed 
 		if (order == 1) {
@@ -293,12 +318,10 @@ bool BST::display(int order, int source) {
 				out.close();
 			}
 		}
-		cout << "\nOutput successful. ";
-		system("PAUSE");
+		cout << "\nOutput Successful. ";
 		return 1;
 	}
 	cout << "Invalid order/source selection\n\n";
-	system("PAUSE");
 	return 0;
 }
 
@@ -320,6 +343,30 @@ void BST::display2desc(BTNode* cur, ostream& out) {
 	display2desc(cur->right, out);
 	cur->item.print(out);
 	display2desc(cur->left, out);
+}
+
+// Question D
+bool BST::CloneSubtree(BST t1, type item) {
+	// t2 must be empty before cloning
+	if (t1.empty()) return 0;
+
+	BTNode* temp{ nullptr };
+
+	// item pased in will be the root
+	if (checkExist(t1.root, temp, item)) {
+		root = CloneSubtree2(temp);
+	}
+	//preOrderPrint();
+	return 1;
+}
+
+BTNode* BST::CloneSubtree2(BTNode* root) {
+	if (!root) return nullptr;
+	BTNode* copy{ new BTNode(root->item) };
+	copy->left = CloneSubtree2(root->left);
+	copy->right = CloneSubtree2(root->right);
+	count++;
+	return copy;
 }
 
 //QUESTION e
@@ -344,6 +391,7 @@ bool BST::printLevelNodes() {
 		cout << "\nLevel " << i << " nodes: ";
 		printLevelNodes2(cur, i);
 	}
+	cout << endl;
 	return 1;
 }
 
@@ -358,3 +406,66 @@ void BST::printLevelNodes2(BTNode* cur, int lv) {
 	printLevelNodes2(cur->left, lv - 1);
 	printLevelNodes2(cur->right, lv - 1);
 }
+
+// Question F
+// not as efficient as vector
+void BST::printPath2(BTNode* root, type path[], int pathLength) {
+	if (!root) return;
+	path[pathLength] = root->item;
+	pathLength++;
+	if (!root->left && !root->right) {
+		for (int index{ 0 }; index < pathLength; index++) {
+			cout << path[index].id << " ";
+		}
+		cout << '\n';
+	}
+	else {
+		printPath2(root->left, path, pathLength);
+		printPath2(root->right, path, pathLength);
+	}
+}
+
+bool BST::printPath() {
+	if (empty()) return 0;
+	type path[250];
+	int pathLength{};
+	printPath2(root, path, pathLength);
+	return 1;
+}
+
+// Alternative
+/*
+void BST::efficientway(BTNode*root, vector<type> path){
+	if(!root) return;
+	path.push_back(root->item);
+	if(!root->left && !root->right){
+		string temp;
+		for (int index{0}; index < path.size(); index++){
+			cout << path[index];
+		}
+		if(index < path.size() -1)
+			cout << " ";
+		cout << '\n';
+	}
+	else{
+		efficientway(root->left, path);
+		efficientway(root->right, path);
+	}
+}*/
+
+
+// Custom
+bool BST::checkExist(BTNode* root, BTNode*& node, type& item) {
+	if (!root) return 0;
+	if (root->item.id == item.id) {
+		node = root;
+		return 1;
+	}
+	if (root->item.id > item.id)
+		return checkExist(root->left, node, item);
+	else
+		return checkExist(root->right, node, item);
+}
+
+
+
