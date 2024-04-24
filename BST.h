@@ -63,6 +63,7 @@ struct BST {
 	//Question e
 	bool printLevelNodes();
 	void printLevelNodes2(BTNode* cur, int lv);
+	int height(BTNode* level);
 
 	// Question f
 	void printPath2(BTNode* root, type path[], int pathLength);
@@ -71,7 +72,6 @@ struct BST {
 
 	// Custom functions
 	bool checkExist(BTNode* root, BTNode*& node, type& item);
-	int height(BTNode* level);
 };
 
 
